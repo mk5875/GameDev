@@ -1,10 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 
 	Transform pos;
+
+	void Awake()
+	{
+		SceneManager.sceneLoaded += WhatShouldHappenWhenLevelLoads;
+		DontDestroyOnLoad(this.gameObject);
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +35,12 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			pos.Translate (new Vector3 (Time.deltaTime * 3, 0, 0));
 		}
-
+	}
+		
+	private void WhatShouldHappenWhenLevelLoads (Scene theScene, LoadSceneMode theMode)
+	{
+		if (theScene.name == "First Floor") {
+			Debug.Log ("look at me");
+		}
 	}
 }
